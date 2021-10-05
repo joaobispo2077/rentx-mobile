@@ -3,7 +3,7 @@ import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import Logo from '../../assets/logo.svg';
-import { Container, Header, Text } from './styles';
+import { Container, Header, HeaderContent, Text } from './styles';
 
 export function Home() {
   return (
@@ -15,8 +15,10 @@ export function Home() {
       />
 
       <Header>
-        <Logo width={RFValue(108)} height={RFValue(12)} />
-        <Text>Total de 12 carros</Text>
+        <HeaderContent>
+          <Logo width={RFValue(108)} height={RFValue(12)} />
+          <Text>Total de 12 carros</Text>
+        </HeaderContent>
       </Header>
     </Container>
   );
