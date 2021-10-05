@@ -8,8 +8,10 @@ import {
 } from '@expo-google-fonts/archivo';
 import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import AppLoading from 'expo-app-loading';
+import { ThemeProvider } from 'styled-components';
 
 import { Home } from './src/screens/Home';
+import theme from './src/styles/theme';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,5 +26,9 @@ export default function App() {
     return <AppLoading />;
   }
 
-  return <Home />;
+  return (
+    <ThemeProvider theme={theme}>
+      <Home />
+    </ThemeProvider>
+  );
 }
