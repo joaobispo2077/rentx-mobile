@@ -30,3 +30,16 @@ export const Text = styled.Text`
 
   font-size: ${RFValue(15)}px;
 `;
+
+export const CarCardList = styled.FlatList.attrs({
+  contentContainerStyle: {
+    padding: RFValue(24),
+  },
+  showsVerticalScrollIndicator: false,
+})`
+  flex: 1;
+`;
+
+export const CarCardItem = styled.SafeAreaView`
+  margin-bottom: ${RFValue(16)}px;
+`;
