@@ -25,3 +25,11 @@ export const Header = styled.View`
 export const CarImage = styled.View`
   margin-top: ${getStatusBarHeight() + 32}px;
 `;
+
+export const Details = styled.View``;
+export const Identity = styled.View``;
+export const Brand = styled.Text``;
+export const Model = styled.Text``;
+export const Pricing = styled.View``;
+export const Period = styled.Text``;
+export const Price = styled.Text``;

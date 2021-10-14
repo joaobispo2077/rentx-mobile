@@ -2,7 +2,18 @@ import React from 'react';
 
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
-import { CarImage, Container, Header } from './styles';
+import {
+  CarImage,
+  Container,
+  Header,
+  Details,
+  Identity,
+  Brand,
+  Model,
+  Pricing,
+  Period,
+  Price,
+} from './styles';
 
 export function CarDetails() {
   const imagesURL = [
@@ -17,6 +28,16 @@ export function CarDetails() {
       <CarImage>
         <ImageSlider imagesURL={imagesURL} />
       </CarImage>
+      <Details>
+        <Identity>
+          <Brand>Porsche</Brand>
+          <Model>Panamera</Model>
+        </Identity>
+        <Pricing>
+          <Period>Ao dia</Period>
+          <Price>R$ 580</Price>
+        </Pricing>
+      </Details>
     </Container>
   );
 }
