@@ -26,10 +26,61 @@ export const CarImage = styled.View`
   margin-top: ${getStatusBarHeight() + 32}px;
 `;
 
-export const Details = styled.View``;
+export const Content = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    padding: RFValue(24),
+    alignItems: 'center',
+  },
+})`
+  width: 100%;
+`;
+
+export const Details = styled.View`
+  margin-top: ${RFValue(24)}px;
+
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const Identity = styled.View``;
-export const Brand = styled.Text``;
-export const Model = styled.Text``;
+
+export const Brand = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.secondary_500};
+  color: ${({ theme }) => theme.colors.text_detail};
+  font-size: ${RFValue(10)}px;
+
+  text-transform: uppercase;
+`;
+
+export const Model = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.secondary_500};
+  color: ${({ theme }) => theme.colors.title};
+  font-size: ${RFValue(25)}px;
+`;
+
 export const Pricing = styled.View``;
-export const Period = styled.Text``;
-export const Price = styled.Text``;
+
+export const Period = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.secondary_500};
+  color: ${({ theme }) => theme.colors.text_detail};
+  font-size: ${RFValue(10)}px;
+
+  text-transform: uppercase;
+`;
+
+export const Price = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.secondary_500};
+  color: ${({ theme }) => theme.colors.main};
+  font-size: ${RFValue(25)}px;
+`;
+
+export const Description = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary_400};
+  color: ${({ theme }) => theme.colors.text};
+  font-size: ${RFValue(15)}px;
+
+  text-align: justify;
+  margin-top: ${RFValue(24)}px;
+`;

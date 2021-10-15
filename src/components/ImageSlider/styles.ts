@@ -36,6 +36,7 @@ export const ImageSelector = styled.View<ImageSelectorProps>`
 export const ImageWrapper = styled.View`
   width: ${Dimensions.get('window').width}px;
   height: ${RFValue(132)}px;
+  margin-top: ${RFValue(20)}px;
 
   justify-content: center;
   align-items: center;
