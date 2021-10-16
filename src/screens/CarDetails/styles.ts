@@ -93,10 +93,12 @@ export const CarStatItem = styled.View`
 `;
 
 export const Description = styled.Text`
+  margin-top: ${RFValue(24)}px;
+
   font-family: ${({ theme }) => theme.fonts.primary_400};
   color: ${({ theme }) => theme.colors.text};
   font-size: ${RFValue(15)}px;
+  line-height: ${RFValue(25)}px;
 
   text-align: justify;
-  margin-top: ${RFValue(24)}px;
 `;
