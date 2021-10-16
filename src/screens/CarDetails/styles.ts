@@ -76,6 +76,22 @@ export const Price = styled.Text`
   font-size: ${RFValue(25)}px;
 `;
 
+export const CarStatList = styled.View`
+  margin-top: ${RFValue(16)}px;
+
+  width: 100%;
+
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const CarStatItem = styled.View`
+  margin-bottom: 8px;
+`;
+
 export const Description = styled.Text`
   font-family: ${({ theme }) => theme.fonts.primary_400};
   color: ${({ theme }) => theme.colors.text};

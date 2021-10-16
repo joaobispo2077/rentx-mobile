@@ -1,6 +1,13 @@
 import React from 'react';
 
+import AccelerationIcon from '../../assets/acceleration.svg';
+import AutoIcon from '../../assets/exchange.svg';
+import ForceIcon from '../../assets/force.svg';
+import GasolineIcon from '../../assets/gasoline.svg';
+import PeopleIcon from '../../assets/people.svg';
+import SpeedIcon from '../../assets/speed.svg';
 import { BackButton } from '../../components/BackButton';
+import { CarStat } from '../../components/CarStat';
 import { ImageSlider } from '../../components/ImageSlider';
 import {
   CarImage,
@@ -15,6 +22,8 @@ import {
   Period,
   Price,
   Description,
+  CarStatList,
+  CarStatItem,
 } from './styles';
 
 export function CarDetails() {
@@ -42,6 +51,26 @@ export function CarDetails() {
             <Price>R$ 580</Price>
           </Pricing>
         </Details>
+        <CarStatList>
+          <CarStatItem>
+            <CarStat title="380km/h" icon={SpeedIcon} />
+          </CarStatItem>
+          <CarStatItem>
+            <CarStat title="3.2s" icon={AccelerationIcon} />
+          </CarStatItem>
+          <CarStatItem>
+            <CarStat title="800 HP" icon={ForceIcon} />
+          </CarStatItem>
+          <CarStatItem>
+            <CarStat title="Gasoline" icon={GasolineIcon} />
+          </CarStatItem>
+          <CarStatItem>
+            <CarStat title="Auto" icon={AutoIcon} />
+          </CarStatItem>
+          <CarStatItem>
+            <CarStat title="2 pessoas" icon={PeopleIcon} />
+          </CarStatItem>
+        </CarStatList>
         <Description>
           Este é automóvel desportivo. Surgiu do lendário touro de lide
           indultado na praça Real Maestranza de Sevilla. É um belíssimo carro
