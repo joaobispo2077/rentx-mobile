@@ -7,6 +7,7 @@ import GasolineIcon from '../../assets/gasoline.svg';
 import PeopleIcon from '../../assets/people.svg';
 import SpeedIcon from '../../assets/speed.svg';
 import { BackButton } from '../../components/BackButton';
+import { Button } from '../../components/Button';
 import { CarStat } from '../../components/CarStat';
 import { ImageSlider } from '../../components/ImageSlider';
 import {
@@ -24,6 +25,7 @@ import {
   Description,
   CarStatList,
   CarStatItem,
+  Footer,
 } from './styles';
 
 export function CarDetails() {
@@ -77,6 +79,9 @@ export function CarDetails() {
           para quem gosta de acelerar.
         </Description>
       </Content>
+      <Footer>
+        <Button title="Escolher período do aluguel" />
+      </Footer>
     </Container>
   );
 }
