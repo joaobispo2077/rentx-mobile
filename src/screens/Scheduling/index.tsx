@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 
 import { useTheme } from 'styled-components/native';
 
@@ -21,6 +22,12 @@ export function Scheduling() {
   return (
     <Container>
       <Header>
+        <StatusBar
+          barStyle="light-content"
+          translucent
+          backgroundColor="transparent"
+        />
+
         <BackButton
           onPress={() => console.log('irra')}
           color={theme.colors.shape}
