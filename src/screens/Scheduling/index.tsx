@@ -5,6 +5,7 @@ import { useTheme } from 'styled-components/native';
 
 import ArrowIcon from '../../assets/arrow.svg';
 import { BackButton } from '../../components/BackButton';
+import { Button } from '../../components/Button';
 import {
   Container,
   Header,
@@ -14,6 +15,8 @@ import {
   DateInfo,
   DateTitle,
   DateValue,
+  Content,
+  Footer,
 } from './styles';
 
 export function Scheduling() {
@@ -52,6 +55,10 @@ export function Scheduling() {
         </RentalPeriod>
       </Header>
       <Schedule />
+      <Content />
+      <Footer>
+        <Button title="Confirmar" onPress={() => console.log('irra')} />
+      </Footer>
     </Container>
   );
 }

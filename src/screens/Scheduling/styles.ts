@@ -70,3 +70,14 @@ export const DateValue = styled.Text<DateValueProps>`
       border-bottom-color: ${theme.colors.text};
     `}
 `;
+
+export const Content = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: RFValue(24),
+  },
+})``;
+
+export const Footer = styled.View`
+  padding: ${RFValue(24)}px;
+`;
