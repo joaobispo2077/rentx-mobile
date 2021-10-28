@@ -6,10 +6,10 @@ import { useTheme } from 'styled-components/native';
 import ArrowIcon from '../../assets/arrow.svg';
 import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
+import { Calendar } from '../../components/Calendar';
 import {
   Container,
   Header,
-  Schedule,
   Title,
   RentalPeriod,
   DateInfo,
@@ -54,8 +54,9 @@ export function Scheduling() {
           </DateInfo>
         </RentalPeriod>
       </Header>
-      <Schedule />
-      <Content />
+      <Content>
+        <Calendar />
+      </Content>
       <Footer>
         <Button title="Confirmar" onPress={() => console.log('irra')} />
       </Footer>
