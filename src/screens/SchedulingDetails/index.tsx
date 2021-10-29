@@ -30,6 +30,11 @@ import {
   DateInfo,
   DateTitle,
   DateValue,
+  RentalPrice,
+  RentalPriceTitle,
+  RentalPriceDetails,
+  RentalPriceQuota,
+  RentalPriceTotal,
   CarStatList,
   CarStatItem,
   Footer,
@@ -100,6 +105,14 @@ export function SchedulingDetails() {
             <DateValue>20/06/2021</DateValue>
           </DateInfo>
         </RentalPeriod>
+
+        <RentalPrice>
+          <RentalPriceTitle>Total</RentalPriceTitle>
+          <RentalPriceDetails>
+            <RentalPriceQuota>R$ 580 x3 diárias</RentalPriceQuota>
+            <RentalPriceTotal>R$ 2.900</RentalPriceTotal>
+          </RentalPriceDetails>
+        </RentalPrice>
       </Content>
       <Footer>
         <Button title="Escolher período do aluguel" />
