@@ -8,7 +8,16 @@ import { Scheduling } from '../screens/Scheduling';
 import { SchedulingComplete } from '../screens/SchedulingComplete';
 import { SchedulingDetails } from '../screens/SchedulingDetails';
 
-const { Navigator, Screen } = createNativeStackNavigator();
+export type StackNavigatorParamList = {
+  Home: undefined;
+  CarDetails: undefined;
+  Scheduling: undefined;
+  SchedulingDetails: undefined;
+  SchedulingComplete: undefined;
+};
+
+const { Navigator, Screen } =
+  createNativeStackNavigator<StackNavigatorParamList>();
 
 export function StackRoutes() {
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
 
 import GasolineSvg from '../../assets/gasoline.svg';
 import {
@@ -25,9 +26,9 @@ type Car = {
 
 type CarCardProps = {
   car: Car;
-};
+} & RectButtonProps;
 
-export function CarCard({ car }: CarCardProps) {
+export function CarCard({ car, ...rest }: CarCardProps) {
   const formatCurrency = (value: number) => {
     //  new Intl.NumberFormat('pt-BR', {
     //   style: 'currency',
@@ -38,7 +39,7 @@ export function CarCard({ car }: CarCardProps) {
   };
 
   return (
-    <Container>
+    <Container {...rest}>
       <CarDetails>
         <Brand>{car.brand}</Brand>
         <Model>{car.model}</Model>
