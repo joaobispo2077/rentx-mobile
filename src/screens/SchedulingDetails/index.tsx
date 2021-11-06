@@ -133,7 +133,8 @@ export function SchedulingDetails() {
       </Content>
       <Footer>
         <Button
-          title="Escolher período do aluguel"
+          title="Alugar agora"
+          color={theme.colors.success}
           onPress={handleNavigateToSchedulingComplete}
         />
       </Footer>
