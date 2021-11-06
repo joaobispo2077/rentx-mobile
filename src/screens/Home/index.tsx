@@ -30,9 +30,9 @@ export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleNavigateToCarDetails = () => {
+  const handleNavigateToCarDetails = (car: CarDTO) => {
     console.log('Navigate to car details');
-    navigation.navigate('CarDetails');
+    navigation.navigate('CarDetails', { car });
   };
 
   const fetchCars = async () => {
@@ -78,7 +78,10 @@ export function Home() {
           keyExtractor={(car) => car.id}
           renderItem={({ item }) => (
             <CarCardItem>
-              <CarCard car={item} onPress={handleNavigateToCarDetails} />
+              <CarCard
+                car={item}
+                onPress={() => handleNavigateToCarDetails(item)}
+              />
             </CarCardItem>
           )}
         />

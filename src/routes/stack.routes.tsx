@@ -2,6 +2,7 @@ import React from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { CarDTO } from '../dtos/CarDTO';
 import { CarDetails } from '../screens/CarDetails';
 import { Home } from '../screens/Home';
 import { Scheduling } from '../screens/Scheduling';
@@ -10,7 +11,7 @@ import { SchedulingDetails } from '../screens/SchedulingDetails';
 
 export type StackNavigatorParamList = {
   Home: undefined;
-  CarDetails: undefined;
+  CarDetails: { car: CarDTO };
   Scheduling: undefined;
   SchedulingDetails: undefined;
   SchedulingComplete: undefined;
