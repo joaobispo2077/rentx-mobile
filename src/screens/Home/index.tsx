@@ -17,13 +17,13 @@ import {
   Text,
 } from './styles';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<
+type HomeScreenNavigationProps = NativeStackNavigationProp<
   StackNavigatorParamList,
   'Home'
 >;
 
 export function Home() {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const navigation = useNavigation<HomeScreenNavigationProps>();
 
   const car = {
     id: '1',
