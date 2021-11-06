@@ -4,7 +4,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start"
+    "start": "react-native start",
+    "dev:server": "node ./scripts/setupJsonServer.js"
   },
   "dependencies": {
     "@expo-google-fonts/archivo": "^0.2.0",
@@ -46,6 +47,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "json-server": "^0.17.0",
     "prettier": "^2.4.1",
     "react-native-svg-transformer": "^0.14.3",
     "typescript": "~4.0.0"
