@@ -24,8 +24,15 @@ async function setupJsonServer() {
     const isLinux = system === 'linux';
     const isUnix = isLinux || isMac;
 
-    const networkStatCommand = isUnix ? 'lsof -i -P -n' : 'netstat -aon';
-    const { stdout: stdoutCheckJsonServer } = await exec(networkStatCommand);
+    const networkStatCommandWindows = 'netstat -aon';
+
+    const networkStatCommandUnix = 'lsof -i -P -n | grep LISTEN';
+
+    const networkCommand = isUnix
+      ? networkStatCommandUnix
+      : networkStatCommandWindows;
+
+    const { stdout: stdoutCheckJsonServer } = await exec(networkCommand);
     const lines = stdoutCheckJsonServer.split(os.EOL);
     const jsonServerPort = lines.find((line) => line.includes('json-server'));
 
