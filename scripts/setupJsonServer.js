@@ -15,6 +15,10 @@ const PORT = '3333';
 const DELAY = '700';
 
 async function setupJsonServer() {
+  const hostname = os.hostname();
+  const ip = await lookup(hostname);
+  const url = `http://${ip.address}:${PORT}`;
+
   try {
     console.log('Checking if JSON server is already running...');
 
@@ -24,28 +28,30 @@ async function setupJsonServer() {
     const isLinux = system === 'linux';
     const isUnix = isLinux || isMac;
 
-    const networkStatCommandWindows = 'netstat -aon';
+    const networkStatCommand = isUnix ? 'lsof -i -P -n' : 'netstat -aon';
 
-    const networkStatCommandUnix = 'lsof -i -P -n | grep LISTEN';
+    try {
+      const { stdout: stdoutCheckJsonServer } = await exec(networkStatCommand);
+      const lines = stdoutCheckJsonServer.split(os.EOL);
 
-    const networkCommand = isUnix
-      ? networkStatCommandUnix
-      : networkStatCommandWindows;
+      const foundJsonServerPort = isUnix
+        ? lines.find((line) => line.includes(PORT) && line.includes(ip.address))
+        : lines.find((line) => line.includes('json-server'));
 
-    const { stdout: stdoutCheckJsonServer } = await exec(networkCommand);
-    const lines = stdoutCheckJsonServer.split(os.EOL);
-    const jsonServerPort = lines.find((line) => line.includes('json-server'));
+      if (foundJsonServerPort) {
+        const message = isUnix
+          ? `Port ${PORT} is already in use.`
+          : `JSON server is already running on port ${PORT}.`;
 
-    if (jsonServerPort) {
-      console.log('JSON server is already running.');
-      return;
+        console.log(message);
+        return;
+      }
+    } catch (error) {
+      console.log(error.message);
     }
 
     console.log('JSON server is not running.');
     console.log('Setting up JSON server...');
-
-    const hostname = os.hostname();
-    const ip = await lookup(hostname);
 
     console.log(`Setting up json server on ${ip.address}`);
 
@@ -57,7 +63,7 @@ async function setupJsonServer() {
     const command = `yarn json-server --host ${ip.address} ./src/services/server.json -p ${PORT} --delay ${DELAY}`;
     console.log('Running command:', command);
     console.log('Waiting for json server to start...');
-    console.log(`Access json server at http://${ip.address}:${PORT}...`);
+    console.log(`Access json server at ${url}...`);
 
     await exec(command);
   } catch (error) {
