@@ -3,17 +3,12 @@ import React from 'react';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import AccelerationIcon from '../../assets/acceleration.svg';
-import AutoIcon from '../../assets/exchange.svg';
-import ForceIcon from '../../assets/force.svg';
-import GasolineIcon from '../../assets/gasoline.svg';
-import PeopleIcon from '../../assets/people.svg';
-import SpeedIcon from '../../assets/speed.svg';
 import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
 import { CarStat } from '../../components/CarStat';
 import { ImageSlider } from '../../components/ImageSlider';
 import { StackNavigatorParamList } from '../../routes/stack.routes';
+import { getIconByIconType } from '../../utils/getIconByIconType';
 import {
   CarImage,
   Container,
@@ -49,23 +44,6 @@ export function CarDetails() {
 
   const handleNavigateToSelectRentalPeriod = () => {
     navigation.navigate('Scheduling');
-  };
-
-  const getIconByIconType = (iconType: string) => {
-    const iconComponentByIconName = {
-      acceleration: AccelerationIcon,
-      exchange: AutoIcon,
-      turning_diameter: ForceIcon,
-      gasoline_motor: GasolineIcon,
-      seats: PeopleIcon,
-      speed: SpeedIcon,
-      default: PeopleIcon,
-    };
-
-    const IconComponent = iconComponentByIconName[iconType];
-    const IconDefault = iconComponentByIconName.gasoline_motor;
-
-    return IconComponent ? IconComponent : IconDefault;
   };
 
   return (
