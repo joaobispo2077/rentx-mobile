@@ -1,12 +1,15 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from 'styled-components/native';
 
 import ArrowIcon from '../../assets/arrow.svg';
 import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
 import { Calendar } from '../../components/Calendar';
+import { StackNavigatorParamList } from '../../routes/stack.routes';
 import {
   Container,
   Header,
@@ -19,8 +22,21 @@ import {
   Footer,
 } from './styles';
 
+type SchedulingScreenNavigationProps = NativeStackNavigationProp<
+  StackNavigatorParamList,
+  'Scheduling'
+>;
 export function Scheduling() {
   const theme = useTheme();
+  const navigation = useNavigation<SchedulingScreenNavigationProps>();
+
+  const handleNavigateGoBack = () => {
+    navigation.goBack();
+  };
+
+  const handleNavigateToSchedulingDetails = () => {
+    navigation.navigate('SchedulingDetails');
+  };
 
   return (
     <Container>
@@ -31,10 +47,7 @@ export function Scheduling() {
           backgroundColor="transparent"
         />
 
-        <BackButton
-          onPress={() => console.log('irra')}
-          color={theme.colors.shape}
-        />
+        <BackButton onPress={handleNavigateGoBack} color={theme.colors.shape} />
 
         <Title>
           Escolha uma {'\n'}
@@ -58,7 +71,7 @@ export function Scheduling() {
         <Calendar />
       </Content>
       <Footer>
-        <Button title="Confirmar" onPress={() => console.log('irra')} />
+        <Button title="Confirmar" onPress={handleNavigateToSchedulingDetails} />
       </Footer>
     </Container>
   );
