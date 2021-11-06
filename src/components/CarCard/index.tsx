@@ -1,7 +1,7 @@
 import React from 'react';
 import { RectButtonProps } from 'react-native-gesture-handler';
 
-import GasolineSvg from '../../assets/gasoline.svg';
+import { getIconByIconType } from '../../utils/getIconByIconType';
 import {
   Container,
   CarDetails,
@@ -40,6 +40,8 @@ export function CarCard({ car, ...rest }: CarCardProps) {
     return `R$ ${value}`;
   };
 
+  const CarTypeIcon = getIconByIconType(car.fuel_type);
+
   return (
     <Container {...rest}>
       <CarDetails>
@@ -52,7 +54,7 @@ export function CarCard({ car, ...rest }: CarCardProps) {
             <Price>{formatCurrency(car.rent.price)}</Price>
           </Pricing>
           <Type>
-            <GasolineSvg />
+            <CarTypeIcon />
           </Type>
         </RentInfo>
       </CarDetails>
