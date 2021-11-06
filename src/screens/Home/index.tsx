@@ -1,5 +1,5 @@
-import React from 'react';
-import { StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { useNavigation } from '@react-navigation/native';
@@ -7,7 +7,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import Logo from '../../assets/logo.svg';
 import { CarCard } from '../../components/CarCard';
+import { Loading } from '../../components/Loading';
+import { CarDTO } from '../../dtos/CarDTO';
 import { StackNavigatorParamList } from '../../routes/stack.routes';
+import { api } from '../../services/api';
 import {
   CarCardItem,
   CarCardList,
@@ -24,32 +27,33 @@ type HomeScreenNavigationProps = NativeStackNavigationProp<
 
 export function Home() {
   const navigation = useNavigation<HomeScreenNavigationProps>();
-
-  const car = {
-    id: '1',
-    brand: 'audi',
-    model: 'RS 5 Coupé',
-    period: 'Ao dia',
-    price: 120,
-    type: 'volt',
-    thumbnail:
-      'https://cdn.sitewebmotors.com.br/uploads/userGallery/5fcfe53240728.png',
-  };
-  // const carTwo = {
-  //   id: '2',
-  //   brand: 'chevrolet',
-  //   model: 'Onix',
-  //   period: 'Ao dia',
-  //   price: 120,
-  //   type: 'hatch',
-  //   thumbnail:
-  //     'https://www.webmotors.com.br/imagens/prod/347468/PORSCHE_PANAMERA_2.9_V6_EHYBRID_4_PDK_34746814472691347.png?s=fill&w=130&h=97&q=70&t=true)',
-  // };
+  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleNavigateToCarDetails = () => {
     console.log('Navigate to car details');
     navigation.navigate('CarDetails');
   };
+
+  const fetchCars = async () => {
+    try {
+      setIsLoading(true);
+      const response = await api.get<CarDTO[]>('/cars');
+
+      console.log(response.data);
+      const data = response.data;
+      setCars(data);
+    } catch (error) {
+      Alert.alert('Erro ao carregar os carros.');
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCars();
+  }, []);
 
   return (
     <Container>
@@ -62,18 +66,23 @@ export function Home() {
       <Header>
         <HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
-          <Text>Total de 12 carros</Text>
+          <Text>Total de {cars.length} carros</Text>
         </HeaderContent>
       </Header>
-      <CarCardList
-        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-        keyExtractor={(car) => String(car)}
-        renderItem={() => (
-          <CarCardItem>
-            <CarCard car={car} onPress={handleNavigateToCarDetails} />
-          </CarCardItem>
-        )}
-      />
+
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <CarCardList
+          data={cars}
+          keyExtractor={(car) => car.id}
+          renderItem={({ item }) => (
+            <CarCardItem>
+              <CarCard car={item} onPress={handleNavigateToCarDetails} />
+            </CarCardItem>
+          )}
+        />
+      )}
     </Container>
   );
 }

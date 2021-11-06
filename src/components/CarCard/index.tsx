@@ -17,10 +17,12 @@ import {
 
 type Car = {
   brand: string;
-  model: string;
-  price: number;
-  type: string;
-  period: string;
+  name: string;
+  rent: {
+    price: number;
+    period: string;
+  };
+  fuel_type: string;
   thumbnail: string;
 };
 
@@ -42,12 +44,12 @@ export function CarCard({ car, ...rest }: CarCardProps) {
     <Container {...rest}>
       <CarDetails>
         <Brand>{car.brand}</Brand>
-        <Model>{car.model}</Model>
+        <Model>{car.name}</Model>
 
         <RentInfo>
           <Pricing>
-            <Period>{car.period}</Period>
-            <Price>{formatCurrency(car.price)}</Price>
+            <Period>{car.rent.period}</Period>
+            <Price>{formatCurrency(car.rent.price)}</Price>
           </Pricing>
           <Type>
             <GasolineSvg />
