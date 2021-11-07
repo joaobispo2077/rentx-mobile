@@ -55,7 +55,6 @@ async function setupJsonServer() {
 
     console.log(`Setting up json server on ${ip.address}`);
 
-    await exec('dir');
     const root = path.resolve(__dirname, '..');
     console.log(`entry into path: ${root}`);
     await exec(`cd ${root}`);
