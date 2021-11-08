@@ -11,6 +11,8 @@ import { Button } from '../../components/Button';
 import { Calendar, DayProps, CalendarProps } from '../../components/Calendar';
 import { generateInterval } from '../../components/Calendar/generateInterval';
 import { StackNavigatorParamList } from '../../routes/stack.routes';
+import { formatDate } from '../../utils/formatDate';
+import { getPlatformDate } from '../../utils/getPlatformDate';
 import {
   Container,
   Header,
@@ -23,14 +25,23 @@ import {
   Footer,
 } from './styles';
 
+type RentalPeriod = {
+  startDate: number;
+  endDate: number;
+  startDateFormatted: string;
+  endDateFormatted: string;
+};
+
 type SchedulingScreenNavigationProps = NativeStackNavigationProp<
   StackNavigatorParamList,
   'Scheduling'
 >;
+
 export function Scheduling() {
   const theme = useTheme();
   const navigation = useNavigation<SchedulingScreenNavigationProps>();
 
+  const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>();
   const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>();
   const [markedDates, setMarkedDates] =
     useState<CalendarProps['markedDates']>();
@@ -71,7 +82,26 @@ export function Scheduling() {
     setLastSelectedDate(endDate);
     const markedDatesInterval = generateInterval(startDate, endDate);
     setMarkedDates(markedDatesInterval);
-    return;
+
+    console.log('startDate', startDate.dateString);
+    console.log('endDate', endDate.dateString);
+    const startDateFormatted = formatDate(
+      getPlatformDate(new Date(startDate.dateString)),
+    );
+    console.log('startDateFormatted', startDateFormatted);
+
+    const endDateFormatted = formatDate(
+      getPlatformDate(new Date(endDate.dateString)),
+    );
+
+    const newRentalPeriod = {
+      startDate: startDate.timestamp,
+      endDate: endDate.timestamp,
+      startDateFormatted,
+      endDateFormatted,
+    };
+
+    setRentalPeriod(newRentalPeriod);
   };
 
   return (
@@ -93,13 +123,17 @@ export function Scheduling() {
         <RentalPeriod>
           <DateInfo>
             <DateTitle>DE</DateTitle>
-            <DateValue isSelected={false} />
+            <DateValue isSelected={false}>
+              {rentalPeriod?.startDateFormatted}
+            </DateValue>
           </DateInfo>
 
           <ArrowIcon />
           <DateInfo>
             <DateTitle>Até</DateTitle>
-            <DateValue isSelected={false} />
+            <DateValue isSelected={false}>
+              {rentalPeriod?.endDateFormatted}
+            </DateValue>
           </DateInfo>
         </RentalPeriod>
       </Header>
