@@ -123,7 +123,7 @@ export function Scheduling() {
         <RentalPeriod>
           <DateInfo>
             <DateTitle>DE</DateTitle>
-            <DateValue isSelected={false}>
+            <DateValue isSelected={!!rentalPeriod?.startDateFormatted}>
               {rentalPeriod?.startDateFormatted}
             </DateValue>
           </DateInfo>
@@ -131,7 +131,7 @@ export function Scheduling() {
           <ArrowIcon />
           <DateInfo>
             <DateTitle>Até</DateTitle>
-            <DateValue isSelected={false}>
+            <DateValue isSelected={!!rentalPeriod?.endDateFormatted}>
               {rentalPeriod?.endDateFormatted}
             </DateValue>
           </DateInfo>
