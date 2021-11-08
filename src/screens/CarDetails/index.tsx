@@ -43,7 +43,9 @@ export function CarDetails() {
   };
 
   const handleNavigateToSelectRentalPeriod = () => {
-    navigation.navigate('Scheduling');
+    navigation.navigate('Scheduling', {
+      car,
+    });
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, StatusBar } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from 'styled-components/native';
 
@@ -37,7 +37,10 @@ type SchedulingScreenNavigationProps = NativeStackNavigationProp<
 
 export function Scheduling() {
   const theme = useTheme();
+
   const navigation = useNavigation<SchedulingScreenNavigationProps>();
+  const route = useRoute<RouteProp<StackNavigatorParamList, 'Scheduling'>>();
+  const { car } = route.params;
 
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>();
   const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>();
@@ -54,7 +57,12 @@ export function Scheduling() {
       return;
     }
 
-    navigation.navigate('SchedulingDetails');
+    const schedulingDetailsPayload = {
+      car,
+      dates: Object.keys(markedDates),
+    };
+
+    navigation.navigate('SchedulingDetails', schedulingDetailsPayload);
   };
 
   const getStartDate = (endDate: DayProps) => {
