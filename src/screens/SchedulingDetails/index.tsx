@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -10,6 +11,7 @@ import { Button } from '../../components/Button';
 import { CarStat } from '../../components/CarStat';
 import { ImageSlider } from '../../components/ImageSlider';
 import { StackNavigatorParamList } from '../../routes/stack.routes';
+import { api } from '../../services/api';
 import { formatDate } from '../../utils/formatDate';
 import { getIconByIconType } from '../../utils/getIconByIconType';
 import {
@@ -38,6 +40,7 @@ import {
   CarStatItem,
   Footer,
 } from './styles';
+
 type SchedulingDetailsScreenNavigationProps = NativeStackNavigationProp<
   StackNavigatorParamList,
   'SchedulingDetails'
@@ -49,8 +52,9 @@ export function SchedulingDetails() {
   const route =
     useRoute<RouteProp<StackNavigatorParamList, 'SchedulingDetails'>>();
   const { car, dates } = route.params;
-  const fromDate = formatDate(dates[0]);
-  const toDate = formatDate(dates[dates.length - 1]);
+
+  const startDate = formatDate(dates[0]);
+  const endDate = formatDate(dates[dates.length - 1]);
 
   const diary = dates.length;
   const total = car.rent.price * diary;
@@ -61,6 +65,30 @@ export function SchedulingDetails() {
 
   const handleNavigateToSchedulingComplete = () => {
     navigation.navigate('SchedulingComplete');
+  };
+
+  const handleConfirmRental = async () => {
+    try {
+      type ResponseSchedulesByCars = {
+        id: string;
+        unavailable_dates: string[];
+      };
+      const responseSchedules = await api.get<ResponseSchedulesByCars>(
+        `/schedules_bycars/${car.id}`,
+      );
+      const schedulesByCar = responseSchedules.data;
+
+      const unavailable_dates = schedulesByCar.unavailable_dates.concat(dates);
+
+      await api.put(`/schedules_bycars/${schedulesByCar.id}`, {
+        unavailable_dates,
+      });
+
+      handleNavigateToSchedulingComplete();
+    } catch (error: any) {
+      Alert.alert('Erro ao reservar o carro');
+      console.log('error', error);
+    }
   };
 
   return (
@@ -99,7 +127,7 @@ export function SchedulingDetails() {
           </CalendarIcon>
           <DateInfo>
             <DateTitle>DE</DateTitle>
-            <DateValue>{fromDate}</DateValue>
+            <DateValue>{startDate}</DateValue>
           </DateInfo>
           <Feather
             name="chevron-right"
@@ -108,7 +136,7 @@ export function SchedulingDetails() {
           />
           <DateInfo>
             <DateTitle>Até</DateTitle>
-            <DateValue>{toDate}</DateValue>
+            <DateValue>{endDate}</DateValue>
           </DateInfo>
         </RentalPeriod>
 
@@ -116,7 +144,7 @@ export function SchedulingDetails() {
           <RentalPriceTitle>Total</RentalPriceTitle>
           <RentalPriceDetails>
             <RentalPriceQuota>
-              R$ {car.rent.price} x{diary}
+              R$ {car.rent.price} x{diary} diárias
             </RentalPriceQuota>
             <RentalPriceTotal>R$ {total}</RentalPriceTotal>
           </RentalPriceDetails>
@@ -126,7 +154,7 @@ export function SchedulingDetails() {
         <Button
           title="Alugar agora"
           color={theme.colors.success}
-          onPress={handleNavigateToSchedulingComplete}
+          onPress={handleConfirmRental}
         />
       </Footer>
     </Container>
