@@ -1,4 +1,5 @@
 import { FlatList } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import styled from 'styled-components/native';
@@ -47,4 +48,19 @@ export const CarCardList = styled(FlatList as new () => FlatList<CarDTO>).attrs(
 
 export const CarCardItem = styled.SafeAreaView`
   margin-bottom: ${RFValue(16)}px;
+`;
+
+export const MyCarsButton = styled(RectButton)`
+  position: absolute;
+  right: ${RFValue(22)}px;
+  bottom: ${RFValue(13)}px;
+
+  width: ${RFValue(60)}px;
+  height: ${RFValue(60)}px;
+
+  background-color: ${({ theme }) => theme.colors.main};
+  border-radius: 30px;
+
+  align-items: center;
+  justify-content: center;
 `;

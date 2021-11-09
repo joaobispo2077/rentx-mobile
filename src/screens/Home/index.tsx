@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Alert, StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useTheme } from 'styled-components';
 
 import Logo from '../../assets/logo.svg';
 import { CarCard } from '../../components/CarCard';
@@ -17,6 +19,7 @@ import {
   Container,
   Header,
   HeaderContent,
+  MyCarsButton,
   Text,
 } from './styles';
 
@@ -26,6 +29,7 @@ type HomeScreenNavigationProps = NativeStackNavigationProp<
 >;
 
 export function Home() {
+  const theme = useTheme();
   const navigation = useNavigation<HomeScreenNavigationProps>();
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -86,6 +90,10 @@ export function Home() {
           )}
         />
       )}
+
+      <MyCarsButton>
+        <Ionicons name="ios-car-sport" size={32} color={theme.colors.shape} />
+      </MyCarsButton>
     </Container>
   );
 }
