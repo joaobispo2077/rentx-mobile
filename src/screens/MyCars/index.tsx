@@ -1,6 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from 'styled-components/native';
@@ -18,20 +20,25 @@ import {
   SubTitle,
   MyCarsTextContainer,
   MyCarsTextTitle,
-  MyCarsTextSubTitle,
+  MyCarsTextQuantity,
   CarCardList,
   CarCardItem,
-  CarRentalPeriodContainer,
+  CarFooter,
   CarRentalPeriodTitle,
   CarRentalPeriod,
   CarRentalPeriodText,
-  ArrowIcon,
 } from './styles';
 
 type MyCarsScreenNavigationProps = NativeStackNavigationProp<
   StackNavigatorParamList,
   'MyCars'
 >;
+
+type SchedulesByUserResponse = {
+  car: CarDTO;
+  user_id: string;
+  id: number;
+};
 
 export function MyCars() {
   const theme = useTheme();
@@ -47,7 +54,7 @@ export function MyCars() {
   const fetchUserCars = async () => {
     try {
       setIsLoading(true);
-      const { data } = await api.get<{ car: CarDTO }[]>(
+      const { data } = await api.get<SchedulesByUserResponse[]>(
         '/schedules_byuser?user_id=10',
       );
 
@@ -70,12 +77,12 @@ export function MyCars() {
       <Header>
         <BackButton onPress={handleNavigateGoBack} color={theme.colors.shape} />
 
-        <Title>Seus agendamentos, {'\n'} estão aqui.</Title>
+        <Title>Seus agendamentos,{'\n'} estão aqui.</Title>
         <SubTitle>Conforto, segurança e praticidade.</SubTitle>
       </Header>
       <MyCarsTextContainer>
         <MyCarsTextTitle>Agendamentos feitos</MyCarsTextTitle>
-        <MyCarsTextSubTitle>{cars.length}</MyCarsTextSubTitle>
+        <MyCarsTextQuantity>{cars.length}</MyCarsTextQuantity>
       </MyCarsTextContainer>
 
       {isLoading ? (
@@ -87,14 +94,19 @@ export function MyCars() {
           renderItem={({ item }) => (
             <CarCardItem>
               <CarCard car={item} />
-              <CarRentalPeriodContainer>
+              <CarFooter>
                 <CarRentalPeriodTitle>período</CarRentalPeriodTitle>
                 <CarRentalPeriod>
                   <CarRentalPeriodText>18/06/2021</CarRentalPeriodText>
-                  <ArrowIcon />
+                  <AntDesign
+                    name="arrowright"
+                    size={24}
+                    color={theme.colors.title}
+                    style={{ marginHorizontal: 10 }}
+                  />
                   <CarRentalPeriodText>20/06/2021</CarRentalPeriodText>
                 </CarRentalPeriod>
-              </CarRentalPeriodContainer>
+              </CarFooter>
             </CarCardItem>
           )}
         />
