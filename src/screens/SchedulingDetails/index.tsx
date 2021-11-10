@@ -80,6 +80,11 @@ export function SchedulingDetails() {
 
       const unavailable_dates = schedulesByCar.unavailable_dates.concat(dates);
 
+      await api.post('/schedules_byuser', {
+        user_id: 10,
+        car,
+      });
+
       await api.put(`/schedules_bycars/${schedulesByCar.id}`, {
         unavailable_dates,
       });
