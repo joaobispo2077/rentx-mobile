@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -78,6 +78,11 @@ export function MyCars() {
   return (
     <Container>
       <Header>
+        <StatusBar
+          backgroundColor="transparent"
+          barStyle="light-content"
+          translucent
+        />
         <BackButton onPress={handleNavigateGoBack} color={theme.colors.shape} />
 
         <Title>Seus agendamentos,{'\n'} estão aqui.</Title>
