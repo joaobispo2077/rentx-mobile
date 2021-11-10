@@ -13,6 +13,7 @@ import { Loading } from '../../components/Loading';
 import { CarDTO } from '../../dtos/CarDTO';
 import { StackNavigatorParamList } from '../../routes/stack.routes';
 import { api } from '../../services/api';
+import { formatDate } from '../../utils/formatDate';
 import {
   Container,
   Header,
@@ -34,17 +35,19 @@ type MyCarsScreenNavigationProps = NativeStackNavigationProp<
   'MyCars'
 >;
 
-type SchedulesByUserResponse = {
+export type ScheduleCarPayload = {
   car: CarDTO;
   user_id: string;
   id: number;
+  startDate: string;
+  endDate: string;
 };
 
 export function MyCars() {
   const theme = useTheme();
   const navigation = useNavigation<MyCarsScreenNavigationProps>();
 
-  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [cars, setCars] = useState<ScheduleCarPayload[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleNavigateGoBack = () => {
@@ -54,11 +57,11 @@ export function MyCars() {
   const fetchUserCars = async () => {
     try {
       setIsLoading(true);
-      const { data } = await api.get<SchedulesByUserResponse[]>(
-        '/schedules_byuser?user_id=10',
+      const { data } = await api.get<ScheduleCarPayload[]>(
+        '/schedules_byuser?user_id=100',
       );
 
-      setCars(data.map((item) => item.car));
+      setCars(data);
       console.log(data);
     } catch (error: any) {
       Alert.alert('Erro', 'Erro ao carregar os carros');
@@ -90,21 +93,25 @@ export function MyCars() {
       ) : (
         <CarCardList
           data={cars}
-          keyExtractor={(car) => car.id}
+          keyExtractor={(car) => String(car.id)}
           renderItem={({ item }) => (
             <CarCardItem>
-              <CarCard car={item} />
+              <CarCard car={item.car} />
               <CarFooter>
                 <CarRentalPeriodTitle>período</CarRentalPeriodTitle>
                 <CarRentalPeriod>
-                  <CarRentalPeriodText>18/06/2021</CarRentalPeriodText>
+                  <CarRentalPeriodText>
+                    {formatDate(item.startDate)}
+                  </CarRentalPeriodText>
                   <AntDesign
                     name="arrowright"
                     size={24}
                     color={theme.colors.title}
                     style={{ marginHorizontal: 10 }}
                   />
-                  <CarRentalPeriodText>20/06/2021</CarRentalPeriodText>
+                  <CarRentalPeriodText>
+                    {formatDate(item.endDate)}
+                  </CarRentalPeriodText>
                 </CarRentalPeriod>
               </CarFooter>
             </CarCardItem>

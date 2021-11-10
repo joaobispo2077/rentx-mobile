@@ -4,7 +4,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 import styled from 'styled-components/native';
 
-import { CarDTO } from '../../dtos/CarDTO';
+import { ScheduleCarPayload } from '.';
 
 export const Container = styled.View`
   flex: 1;
@@ -59,14 +59,14 @@ export const MyCarsTextQuantity = styled.Text`
   color: ${({ theme }) => theme.colors.title};
 `;
 
-export const CarCardList = styled(FlatList as new () => FlatList<CarDTO>).attrs(
-  {
-    contentContainerStyle: {
-      padding: RFValue(24),
-    },
-    showsVerticalScrollIndicator: false,
+export const CarCardList = styled(
+  FlatList as new () => FlatList<ScheduleCarPayload>,
+).attrs({
+  contentContainerStyle: {
+    padding: RFValue(24),
   },
-)`
+  showsVerticalScrollIndicator: false,
+})`
   flex: 1;
 `;
 
