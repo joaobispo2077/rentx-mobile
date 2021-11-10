@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import { FlatList, ViewToken } from 'react-native';
 
 import {
   Container,
@@ -13,26 +14,41 @@ type ImageSliderProps = {
   imagesURL: string[];
 };
 
-export const ImageSlider: React.FC<ImageSliderProps> = ({ imagesURL }) => {
+type OnHandleImageSelector = {
+  viewableItems: Array<ViewToken>;
+  changed: Array<ViewToken>;
+};
+
+export const ImageSlider: React.FC<ImageSliderProps> = ({
+  imagesURL,
+}: ImageSliderProps) => {
+  const [selectedImage, setSelectedImage] = useState(imagesURL[0]);
+
+  const onHandleChangeImage = useRef((info: OnHandleImageSelector) => {
+    setSelectedImage(info.viewableItems[0].item);
+  });
+
   return (
     <Container>
       <ImageSelectorList>
-        <ImageSelectorItem>
-          <ImageSelector isActive={true} />
-        </ImageSelectorItem>
-        <ImageSelectorItem>
-          <ImageSelector isActive={false} />
-        </ImageSelectorItem>
-        <ImageSelectorItem>
-          <ImageSelector isActive={false} />
-        </ImageSelectorItem>
-        <ImageSelectorItem>
-          <ImageSelector isActive={false} />
-        </ImageSelectorItem>
+        {imagesURL.map((imageURL) => (
+          <ImageSelectorItem key={imageURL}>
+            <ImageSelector isActive={selectedImage === imageURL} />
+          </ImageSelectorItem>
+        ))}
       </ImageSelectorList>
-      <ImageWrapper>
-        <Image source={{ uri: imagesURL[0] }} resizeMode="contain" />
-      </ImageWrapper>
+      <FlatList
+        data={imagesURL}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <ImageWrapper>
+            <Image source={{ uri: item }} resizeMode="contain" />
+          </ImageWrapper>
+        )}
+        onViewableItemsChanged={onHandleChangeImage.current}
+      />
     </Container>
   );
 };
