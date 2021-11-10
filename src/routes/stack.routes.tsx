@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CarDTO } from '../dtos/CarDTO';
 import { CarDetails } from '../screens/CarDetails';
 import { Home } from '../screens/Home';
+import { MyCars } from '../screens/MyCars';
 import { Scheduling } from '../screens/Scheduling';
 import { SchedulingComplete } from '../screens/SchedulingComplete';
 import { SchedulingDetails } from '../screens/SchedulingDetails';
@@ -15,6 +16,7 @@ export type StackNavigatorParamList = {
   Scheduling: { car: CarDTO };
   SchedulingDetails: { car: CarDTO; dates: string[] };
   SchedulingComplete: undefined;
+  MyCars: undefined;
 };
 
 const { Navigator, Screen } =
@@ -32,6 +34,7 @@ export function StackRoutes() {
       <Screen name="Scheduling" component={Scheduling} />
       <Screen name="SchedulingDetails" component={SchedulingDetails} />
       <Screen name="SchedulingComplete" component={SchedulingComplete} />
+      <Screen name="MyCars" component={MyCars} />
     </Navigator>
   );
 }

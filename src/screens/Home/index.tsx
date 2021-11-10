@@ -39,6 +39,10 @@ export function Home() {
     navigation.navigate('CarDetails', { car });
   };
 
+  const handleNavigateToMyCars = () => {
+    navigation.navigate('MyCars');
+  };
+
   const fetchCars = async () => {
     try {
       setIsLoading(true);
@@ -91,7 +95,7 @@ export function Home() {
         />
       )}
 
-      <MyCarsButton>
+      <MyCarsButton onPress={handleNavigateToMyCars}>
         <Ionicons name="ios-car-sport" size={32} color={theme.colors.shape} />
       </MyCarsButton>
     </Container>
