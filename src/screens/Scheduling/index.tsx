@@ -152,7 +152,11 @@ export function Scheduling() {
         <Calendar markedDates={markedDates} onDayPress={handleChangeDate} />
       </Content>
       <Footer>
-        <Button title="Confirmar" onPress={handleNavigateToSchedulingDetails} />
+        <Button
+          title="Confirmar"
+          onPress={handleNavigateToSchedulingDetails}
+          enabled={!!rentalPeriod?.endDateFormatted}
+        />
       </Footer>
     </Container>
   );
