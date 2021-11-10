@@ -15,7 +15,7 @@ export const Container = styled(RectButton)<ContainerProps>`
   align-items: center;
   justify-content: center;
 
-  opacity: ${({ enabled }) => (enabled ? 1 : 0.5)};
+  opacity: ${({ enabled = true }) => (enabled ? 1 : 0.5)};
 
   background-color: ${({ color, theme }) => color || theme.colors.main};
 `;
