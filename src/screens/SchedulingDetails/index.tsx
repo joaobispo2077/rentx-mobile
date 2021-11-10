@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
@@ -49,6 +49,8 @@ type SchedulingDetailsScreenNavigationProps = NativeStackNavigationProp<
 export function SchedulingDetails() {
   const theme = useTheme();
   const navigation = useNavigation<SchedulingDetailsScreenNavigationProps>();
+  const [isLoading, setIsLoading] = useState(false);
+
   const route =
     useRoute<RouteProp<StackNavigatorParamList, 'SchedulingDetails'>>();
   const { car, dates } = route.params;
@@ -69,6 +71,7 @@ export function SchedulingDetails() {
 
   const handleConfirmRental = async () => {
     try {
+      setIsLoading(true);
       type ResponseSchedulesByCars = {
         id: string;
         unavailable_dates: string[];
@@ -95,6 +98,8 @@ export function SchedulingDetails() {
     } catch (error: any) {
       Alert.alert('Erro ao reservar o carro');
       console.log('error', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -162,6 +167,8 @@ export function SchedulingDetails() {
           title="Alugar agora"
           color={theme.colors.success}
           onPress={handleConfirmRental}
+          isLoading={isLoading}
+          enabled={!isLoading}
         />
       </Footer>
     </Container>
