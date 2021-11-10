@@ -44,7 +44,7 @@ export const MyCarsTextContainer = styled.View`
   justify-content: space-between;
   align-items: center;
 
-  padding: 24px 24px 0;
+  padding: 24px 24px 29px;
 `;
 
 export const MyCarsTextTitle = styled.Text`
