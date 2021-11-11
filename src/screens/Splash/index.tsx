@@ -3,6 +3,8 @@ import { StatusBar, StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  withTiming,
+  Easing,
 } from 'react-native-reanimated';
 
 import { Button } from '../../components/Button';
@@ -13,13 +15,16 @@ export function Splash() {
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [
       {
-        translateX: progress.value,
+        translateX: withTiming(progress.value, {
+          duration: 500,
+          easing: Easing.bezier(1, 0.05, 0.05, 0.99),
+        }),
       },
     ],
   }));
 
   const handleAnimationProgress = (value: number) => {
-    progress.value += value;
+    progress.value -= value;
   };
 
   return (
@@ -32,7 +37,7 @@ export function Splash() {
 
       <Animated.View style={[styles.box, animatedStyles]} />
 
-      <Button title="Animando" onPress={() => handleAnimationProgress(5)} />
+      <Button title="Animando" onPress={() => handleAnimationProgress(40)} />
     </Container>
   );
 }
