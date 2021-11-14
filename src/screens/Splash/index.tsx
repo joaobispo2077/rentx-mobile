@@ -6,13 +6,25 @@ import Animated, {
   withTiming,
   interpolate,
   Extrapolate,
+  runOnJS,
 } from 'react-native-reanimated';
+
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import BrandSvg from '../../assets/brand.svg';
 import LogoSvg from '../../assets/logo.svg';
+import { StackNavigatorParamList } from '../../routes/stack.routes';
 import { Container } from './styles';
 
+type SplashScreenNavigationProps = NativeStackNavigationProp<
+  StackNavigatorParamList,
+  'Splash'
+>;
+
 export function Splash() {
+  const navigation = useNavigation<SplashScreenNavigationProps>();
+
   const splashAnimation = useSharedValue(0);
 
   const brandStyle = useAnimatedStyle(() => ({
@@ -43,13 +55,20 @@ export function Splash() {
     ],
   }));
 
-  const onLoadScreenStartAnimation = useCallback(() => {
-    splashAnimation.value = withTiming(50, { duration: 1000 });
-  }, [splashAnimation]);
+  const navigateToHomeScreen = useCallback(() => {
+    navigation.navigate('Home');
+  }, [navigation]);
+
+  const startSplashScreenAnimation = useCallback(() => {
+    splashAnimation.value = withTiming(50, { duration: 1000 }, () => {
+      'worklet';
+      runOnJS(navigateToHomeScreen)();
+    });
+  }, [navigateToHomeScreen, splashAnimation]);
 
   useEffect(() => {
-    onLoadScreenStartAnimation();
-  }, [onLoadScreenStartAnimation]);
+    startSplashScreenAnimation();
+  }, [startSplashScreenAnimation]);
 
   return (
     <Container>
