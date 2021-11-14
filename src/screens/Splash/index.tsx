@@ -1,31 +1,55 @@
-import React from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
+import React, { useEffect, useCallback } from 'react';
+import { StatusBar } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
-  Easing,
+  interpolate,
+  Extrapolate,
 } from 'react-native-reanimated';
 
-import { Button } from '../../components/Button';
+import BrandSvg from '../../assets/brand.svg';
+import LogoSvg from '../../assets/logo.svg';
 import { Container } from './styles';
 
 export function Splash() {
-  const progress = useSharedValue(0);
-  const animatedStyles = useAnimatedStyle(() => ({
+  const splashAnimation = useSharedValue(0);
+
+  const brandStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(splashAnimation.value, [0, 25, 50], [1, 0.3, 0]),
     transform: [
       {
-        translateX: withTiming(progress.value, {
-          duration: 500,
-          easing: Easing.bezier(1, 0.05, 0.05, 0.99),
-        }),
+        translateX: interpolate(
+          splashAnimation.value,
+          [0, 50],
+          [0, 50],
+          Extrapolate.CLAMP,
+        ),
       },
     ],
   }));
 
-  const handleAnimationProgress = (value: number) => {
-    progress.value -= value;
-  };
+  const logoStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(splashAnimation.value, [0, 25, 50], [0, 0.3, 1]),
+    transform: [
+      {
+        translateX: interpolate(
+          splashAnimation.value,
+          [0, 50],
+          [50, 0],
+          Extrapolate.CLAMP,
+        ),
+      },
+    ],
+  }));
+
+  const onLoadScreenStartAnimation = useCallback(() => {
+    splashAnimation.value = withTiming(50, { duration: 1000 });
+  }, [splashAnimation]);
+
+  useEffect(() => {
+    onLoadScreenStartAnimation();
+  }, [onLoadScreenStartAnimation]);
 
   return (
     <Container>
@@ -34,19 +58,12 @@ export function Splash() {
         barStyle="light-content"
         translucent
       />
-
-      <Animated.View style={[styles.box, animatedStyles]} />
-
-      <Button title="Animando" onPress={() => handleAnimationProgress(40)} />
+      <Animated.View style={[brandStyle, { position: 'absolute' }]}>
+        <BrandSvg width={80} height={50} />
+      </Animated.View>
+      <Animated.View style={[logoStyle, { position: 'absolute' }]}>
+        <LogoSvg width={180} height={20} />
+      </Animated.View>
     </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  box: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'red',
-    marginBottom: 20,
-  },
-});
