@@ -1,4 +1,11 @@
 import React from 'react';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -38,6 +45,20 @@ export function CarDetails() {
   const route = useRoute<RouteProp<StackNavigatorParamList, 'CarDetails'>>();
   const { car } = route.params;
 
+  const scrollVertical = useSharedValue(0);
+  const onScrollCustomizeAnimation = useAnimatedScrollHandler((event) => {
+    scrollVertical.value = event.contentOffset.y;
+  });
+
+  const headerAnimationStyle = useAnimatedStyle(() => ({
+    height: interpolate(
+      scrollVertical.value,
+      [0, 200],
+      [200, 70],
+      Extrapolate.CLAMP,
+    ),
+  }));
+
   const handleNavigateGoBack = () => {
     navigation.goBack();
   };
@@ -50,14 +71,16 @@ export function CarDetails() {
 
   return (
     <Container>
-      <Header>
-        <BackButton onPress={handleNavigateGoBack} />
-      </Header>
-      <CarImage>
-        <ImageSlider imagesURL={car.photos} />
-      </CarImage>
+      <Animated.View style={[headerAnimationStyle]}>
+        <Header>
+          <BackButton onPress={handleNavigateGoBack} />
+        </Header>
+        <CarImage>
+          <ImageSlider imagesURL={car.photos} />
+        </CarImage>
+      </Animated.View>
 
-      <Content>
+      <Content as={Animated.ScrollView} onScroll={onScrollCustomizeAnimation}>
         <Details>
           <Identity>
             <Brand>{car.brand}</Brand>
@@ -78,7 +101,77 @@ export function CarDetails() {
             </CarStatItem>
           ))}
         </CarStatList>
-        <Description>{car.about}</Description>
+        <Description>
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+        </Description>
       </Content>
       <Footer>
         <Button
