@@ -9,7 +9,7 @@ import { useTheme } from 'styled-components/native';
 
 import { BackButton } from '../../components/BackButton';
 import { CarCard } from '../../components/CarCard';
-import { Loading } from '../../components/Loading';
+import { LoadingCarAnimation } from '../../components/LoadingCarAnimation';
 import { CarDTO } from '../../dtos/CarDTO';
 import { StackNavigatorParamList } from '../../routes/stack.routes';
 import { api } from '../../services/api';
@@ -94,7 +94,7 @@ export function MyCars() {
       </MyCarsTextContainer>
 
       {isLoading ? (
-        <Loading />
+        <LoadingCarAnimation />
       ) : (
         <CarCardList
           data={cars}
