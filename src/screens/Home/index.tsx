@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, StatusBar } from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -22,7 +29,6 @@ import {
   MyCarsButton,
   Text,
 } from './styles';
-
 type HomeScreenNavigationProps = NativeStackNavigationProp<
   StackNavigatorParamList,
   'Home'
@@ -33,6 +39,36 @@ export function Home() {
   const navigation = useNavigation<HomeScreenNavigationProps>();
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const buttonVerticalPosition = useSharedValue(0);
+  const buttonHorizontalPosition = useSharedValue(0);
+
+  const myCarsButtonAnimationStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY: buttonVerticalPosition.value,
+      },
+      {
+        translateX: buttonHorizontalPosition.value,
+      },
+    ],
+  }));
+
+  const onMoveMyCarsButton = useAnimatedGestureHandler({
+    onStart: (_, context: any) => {
+      context.translationY = buttonVerticalPosition.value;
+      context.translationX = buttonHorizontalPosition.value;
+    },
+    onActive: (event, context: any) => {
+      buttonVerticalPosition.value = event.translationY + context.translationY;
+      buttonHorizontalPosition.value =
+        event.translationX + context.translationX;
+    },
+    onEnd: () => {
+      buttonVerticalPosition.value = withSpring(0);
+      buttonHorizontalPosition.value = withSpring(0);
+    },
+  });
 
   const handleNavigateToCarDetails = (car: CarDTO) => {
     console.log('Navigate to car details');
@@ -95,9 +131,14 @@ export function Home() {
         />
       )}
 
-      <MyCarsButton onPress={handleNavigateToMyCars}>
-        <Ionicons name="ios-car-sport" size={32} color={theme.colors.shape} />
-      </MyCarsButton>
+      <PanGestureHandler onGestureEvent={onMoveMyCarsButton}>
+        <MyCarsButton
+          onPress={handleNavigateToMyCars}
+          style={[myCarsButtonAnimationStyle]}
+        >
+          <Ionicons name="ios-car-sport" size={32} color={theme.colors.shape} />
+        </MyCarsButton>
+      </PanGestureHandler>
     </Container>
   );
 }
