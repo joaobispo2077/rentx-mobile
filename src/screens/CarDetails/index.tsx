@@ -19,6 +19,7 @@ import { getIconByIconType } from '../../utils/getIconByIconType';
 import {
   CarImage,
   Container,
+  HeaderWrapper,
   Header,
   Content,
   Details,
@@ -58,6 +59,14 @@ export function CarDetails() {
       Extrapolate.CLAMP,
     ),
   }));
+  const sliderCartAnimationStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      scrollVertical.value,
+      [0, 110],
+      [1, 0],
+      Extrapolate.CLAMP,
+    ),
+  }));
 
   const handleNavigateGoBack = () => {
     navigation.goBack();
@@ -71,16 +80,20 @@ export function CarDetails() {
 
   return (
     <Container>
-      <Animated.View style={[headerAnimationStyle]}>
+      <HeaderWrapper as={Animated.View} style={[headerAnimationStyle]}>
         <Header>
           <BackButton onPress={handleNavigateGoBack} />
         </Header>
-        <CarImage>
+        <CarImage as={Animated.View} style={sliderCartAnimationStyle}>
           <ImageSlider imagesURL={car.photos} />
         </CarImage>
-      </Animated.View>
+      </HeaderWrapper>
 
-      <Content as={Animated.ScrollView} onScroll={onScrollCustomizeAnimation}>
+      <Content
+        as={Animated.ScrollView}
+        onScroll={onScrollCustomizeAnimation}
+        scrollEventThrottle={16}
+      >
         <Details>
           <Identity>
             <Brand>{car.brand}</Brand>
