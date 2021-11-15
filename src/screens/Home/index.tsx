@@ -76,6 +76,9 @@ export function Home() {
   };
 
   const handleNavigateToMyCars = () => {
+    buttonVerticalPosition.value = 0;
+    buttonHorizontalPosition.value = 0;
+
     navigation.navigate('MyCars');
   };
 
