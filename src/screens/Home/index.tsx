@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, StatusBar } from 'react-native';
+import { Alert, BackHandler, StatusBar } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import {
   useAnimatedGestureHandler,
@@ -97,6 +97,18 @@ export function Home() {
 
   useEffect(() => {
     fetchCars();
+  }, []);
+
+  useEffect(() => {
+    const handleBackButton = () => {
+      return false;
+    };
+
+    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+    };
   }, []);
 
   return (
