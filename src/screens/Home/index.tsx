@@ -16,7 +16,7 @@ import { useTheme } from 'styled-components';
 
 import Logo from '../../assets/logo.svg';
 import { CarCard } from '../../components/CarCard';
-import { Loading } from '../../components/Loading';
+import { LoadingCarAnimation } from '../../components/LoadingCarAnimation';
 import { CarDTO } from '../../dtos/CarDTO';
 import { StackNavigatorParamList } from '../../routes/stack.routes';
 import { api } from '../../services/api';
@@ -127,7 +127,7 @@ export function Home() {
       </Header>
 
       {isLoading ? (
-        <Loading />
+        <LoadingCarAnimation />
       ) : (
         <CarCardList
           data={cars}
